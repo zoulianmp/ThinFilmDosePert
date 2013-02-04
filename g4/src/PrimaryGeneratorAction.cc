@@ -38,7 +38,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction()
     G4ParticleDefinition* particle = particle_table->FindParticle("gamma");
   
     particle_gun->SetParticleDefinition(particle);
-    particle_gun->SetParticlePosition(G4ThreeVector(0., 0., 10.*cm));
+    particle_gun->SetParticlePosition(G4ThreeVector(0., 0., 0.*cm));
     particle_gun->SetParticleEnergy(6.*MeV);
     particle_gun->SetParticleMomentumDirection(G4ThreeVector(0,0,-1));
 }
@@ -50,6 +50,7 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 {
+    particle_gun->GeneratePrimaryVertex(event);
 }
 
 

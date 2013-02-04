@@ -32,7 +32,7 @@
 DetectorConstruction::DetectorConstruction()
 {
     phantom_size = 10*cm;
-    film_thickness = 100*um;
+    film_thickness = 10*cm;
     film_density = 1*g/cm3;
 
     MakeMaterials();

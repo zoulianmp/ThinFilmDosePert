@@ -34,8 +34,8 @@ if __name__ == "__main__":
     stepping_action = g4.SteppingAction()
     Geant4.gRunManager.SetUserAction(stepping_action)
 
+    Geant4.gRunManager.Initialize()
     Geant4.gUImanager.ExecuteMacroFile("macros/vis.mac")
 
-    Geant4.gRunManager.Initialize()
-    Geant4.gRunManager.BeamOn(1000)
+    Geant4.gRunManager.BeamOn(10000)
     
