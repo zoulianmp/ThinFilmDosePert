@@ -29,6 +29,7 @@
 #include "G4Box.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
+#include "G4Material.hh"
 
 #include "boost/python.hpp"
 #include "pyublas/numpy.hpp"
@@ -41,11 +42,36 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     ~DetectorConstruction();
 
     G4VPhysicalVolume* Construct();
+    void MakeMaterials();
+
+    void SetFilmDensity(G4double density) {
+        film_density = density;
+    };
+
+    void SetFilmThickness(G4double thickness) {
+        film_thickness = thickness;
+    }
 
   private:
     G4Box* world_solid;
     G4LogicalVolume* world_logical;
     G4VPhysicalVolume* world_physical;
+
+    G4Box* phantom_solid;
+    G4LogicalVolume* phantom_logical;
+    G4VPhysicalVolume* phantom_physical;
+
+    G4Box* film_solid;
+    G4LogicalVolume* film_logical;
+    G4VPhysicalVolume* film_physical;
+
+    G4double phantom_size;
+    G4double film_thickness;
+
+    G4Material* air;
+    G4Material* water;
+    G4Material* dense_water;
+    G4double film_density;
 };
 
 #endif

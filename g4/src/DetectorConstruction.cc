@@ -26,11 +26,16 @@
 #include "globals.hh"
 #include "G4Material.hh"
 #include "G4NistManager.hh"
-
+#include "G4UIcommand.hh"
 #include "G4UserLimits.hh"
 
 DetectorConstruction::DetectorConstruction()
 {
+    phantom_size = 10*cm;
+    film_thickness = 100*um;
+    film_density = 1*g/cm3;
+
+    MakeMaterials();
 }
 
 DetectorConstruction::~DetectorConstruction()
@@ -39,14 +44,37 @@ DetectorConstruction::~DetectorConstruction()
 
 G4VPhysicalVolume* DetectorConstruction::Construct()
 {
-    G4NistManager* nist_manager = G4NistManager::Instance();
-    G4Material* air = nist_manager->FindOrBuildMaterial("G4_AIR");
 
-    world_solid = new G4Box("world_solid", 2*m, 2*m, 2*m);
+    world_solid = new G4Box("world_solid", 1*m, 1*m, 1*m);
     world_logical = new G4LogicalVolume(world_solid, air, "world_logical", 0, 0, 0);
     world_physical = new G4PVPlacement(0, G4ThreeVector(), world_logical, 
-                                       "world_physical", 0, false, 0);
+                                      "world_physical", 0, false, 0);
+
+    phantom_solid = new G4Box("phantom_solid", phantom_size/2.,
+                                               phantom_size/2.,
+                                               phantom_size/2.);
+    phantom_logical = new G4LogicalVolume(phantom_solid, water, "phantom_logical", 0, 0, 0);
+    phantom_physical = new G4PVPlacement(0, G4ThreeVector(), phantom_logical, 
+                                         "phantom_physical", world_logical, false, 0);
+
+    film_solid = new G4Box("film_solid", phantom_size/2.,
+                                         phantom_size/2.,
+                                         film_thickness/2.);
+    film_logical = new G4LogicalVolume(film_solid, water, "film_logical", 0, 0, 0);
+    G4ThreeVector film_position = G4ThreeVector(0, 0, phantom_size/2. + film_thickness/2.);
+    film_physical = new G4PVPlacement(0, film_position, film_logical, 
+                                         "film_physical", world_logical, false, 0);
     
     return world_physical;
 }
 
+void DetectorConstruction::MakeMaterials() {
+    G4NistManager* nist_manager = G4NistManager::Instance();
+    air = nist_manager->FindOrBuildMaterial("G4_AIR");
+    water = nist_manager->FindOrBuildMaterial("G4_WATER");
+
+    G4String material_name = "G4_WATER" + G4UIcommand::ConvertToString(film_density);
+    dense_water = nist_manager->BuildMaterialWithNewDensity(material_name,
+                                                            "G4_WATER", 
+                                                            film_density);
+}

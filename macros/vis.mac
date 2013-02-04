@@ -1,4 +1,4 @@
-/vis/open OGL 300x300
+/vis/open OGLIX 300x300
 /vis/drawVolume
 /vis/scene/add/axes      0 0 0 300 mm
 
