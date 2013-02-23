@@ -22,6 +22,7 @@
 #ifndef DetectorConstruction_H
 #define DetectorConstruction_H 1
 
+#include "SensitiveDetector.hh"
 
 // GEANT4 //
 #include "G4VUserDetectorConstruction.hh"
@@ -52,7 +53,17 @@ class DetectorConstruction : public G4VUserDetectorConstruction
         film_thickness = thickness;
     }
 
+    pyublas::numpy_vector<float> GetEnergyHistogram() {
+        return detector->energy_histogram;
+    }
+
+    pyublas::numpy_vector<float> GetCountsHistogram() {
+        return detector->counts_histogram;
+    }
+
   private:
+    SensitiveDetector* detector;
+
     G4Box* world_solid;
     G4LogicalVolume* world_logical;
     G4VPhysicalVolume* world_physical;

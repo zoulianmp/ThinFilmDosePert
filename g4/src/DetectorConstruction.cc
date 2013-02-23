@@ -28,12 +28,14 @@
 #include "G4NistManager.hh"
 #include "G4UIcommand.hh"
 #include "G4UserLimits.hh"
+#include "G4VisAttributes.hh"
+#include "G4SDManager.hh"
 
 DetectorConstruction::DetectorConstruction()
 {
     phantom_size = 10*cm;
-    film_thickness = 10*cm;
-    film_density = 1*g/cm3;
+    film_thickness = 1*cm;
+    film_density = 2*g/cm3;
 
     MakeMaterials();
 }
@@ -49,6 +51,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     world_logical = new G4LogicalVolume(world_solid, air, "world_logical", 0, 0, 0);
     world_physical = new G4PVPlacement(0, G4ThreeVector(), world_logical, 
                                       "world_physical", 0, false, 0);
+    world_logical->SetVisAttributes(G4VisAttributes::Invisible);
 
     phantom_solid = new G4Box("phantom_solid", phantom_size/2.,
                                                phantom_size/2.,
@@ -64,6 +67,12 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     G4ThreeVector film_position = G4ThreeVector(0, 0, phantom_size/2. + film_thickness/2.);
     film_physical = new G4PVPlacement(0, film_position, film_logical, 
                                          "film_physical", world_logical, false, 0);
+
+    detector = new SensitiveDetector("phantom_detector");
+
+    G4SDManager* sd_manager = G4SDManager::GetSDMpointer();
+    sd_manager->AddNewDetector(detector);
+    phantom_logical->SetSensitiveDetector(detector);
     
     return world_physical;
 }
@@ -77,4 +86,5 @@ void DetectorConstruction::MakeMaterials() {
     dense_water = nist_manager->BuildMaterialWithNewDensity(material_name,
                                                             "G4_WATER", 
                                                             film_density);
+    dense_water = nist_manager->FindOrBuildMaterial("G4_Sn");
 }

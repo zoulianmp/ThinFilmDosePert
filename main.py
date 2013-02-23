@@ -16,12 +16,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import random
+
+import numpy
+import pylab
+import pyublas
 
 import Geant4
 import g4 
 
 
 if __name__ == "__main__":
+    seed = long(random.randint(0, 2**32))
+    rand_engine = Geant4.Ranlux64Engine()
+    Geant4.HepRandom.setTheEngine(rand_engine)
+    Geant4.HepRandom.setTheSeed(seed)
+
     detector_construction = g4.DetectorConstruction()
     Geant4.gRunManager.SetUserInitialization(detector_construction)
 
@@ -38,4 +48,8 @@ if __name__ == "__main__":
     Geant4.gUImanager.ExecuteMacroFile("macros/vis.mac")
 
     Geant4.gRunManager.BeamOn(10000)
-    
+
+    energy = detector_construction.GetEnergyHistogram()
+    pylab.matshow(energy[:,50,:])
+    pylab.show()
+ 

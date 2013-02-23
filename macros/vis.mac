@@ -1,10 +1,10 @@
-/vis/open OGLIX 300x300
-/vis/drawVolume
+#/vis/open OGLIX 600x600
+#/vis/drawVolume
 
 #/vis/viewer/set/style solid
 #/vis/viewer/set/hiddenEdge 1
-/vis/viewer/set/viewpointThetaPhi 60 30
+#/vis/viewer/set/viewpointThetaPhi 60 30
 
-/vis/scene/add/trajectories
-/vis/scene/endOfEventAction accumulate
+#/vis/scene/add/trajectories
+#/vis/scene/endOfEventAction accumulate
 
