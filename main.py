@@ -53,9 +53,10 @@ if __name__ == "__main__":
     detector_construction.SetMaximumCutoff(501, 1, 1001)
     detector_construction.SetResolution(.1, .1, .1)
 
-    Geant4.gRunManager.BeamOn(1000000)
+    for ene in range(100, 1100, 100):
+        primary_generator.SetEnergy(ene*keV)
+        Geant4.gRunManager.BeamOn(1000000)
 
-    energy = detector_construction.GetEnergyHistogram()
-#    pylab.matshow(numpy.log(energy[:,250,:]))
-#    pylab.show()
-    numpy.save("output", energy)
+        energy = detector_construction.GetEnergyHistogram()
+        numpy.save("output/energy_%i" % ene, energy)
+        detector_construction.ZeroHistograms()
