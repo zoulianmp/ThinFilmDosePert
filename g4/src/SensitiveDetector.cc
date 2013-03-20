@@ -63,6 +63,13 @@ SensitiveDetector::SensitiveDetector(const G4String& name) : G4VSensitiveDetecto
 
     volume = x_res*y_res*z_res;
 
+    modified = true;
+}
+
+SensitiveDetector::~SensitiveDetector() {
+}
+
+void SensitiveDetector::Init() {
     npy_intp dims[] = {x_max - x_min, y_max - y_min, z_max - z_min};
 
     energy_histogram = pyublas::numpy_vector<float> (3, dims);
@@ -70,15 +77,17 @@ SensitiveDetector::SensitiveDetector(const G4String& name) : G4VSensitiveDetecto
 
     counts_histogram = pyublas::numpy_vector<float> (3, dims);
     std::fill(counts_histogram.begin(), counts_histogram.end(), 0.0);
-}
 
-SensitiveDetector::~SensitiveDetector() {
+    modified = false;
 }
 
 void SensitiveDetector::Initialize(G4HCofThisEvent*) {
 }
 
 G4bool SensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory* touchable) {
+    if (modified)
+        Init();
+
     const G4Track* aTrack = aStep->GetTrack();
     const G4String name = aTrack->GetDefinition()->GetParticleName();
 
@@ -99,7 +108,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory* touchab
 //    int z_index = std::floor((position.z() + (z_dim/2. * z_res)) / z_res);
 
     int x_index = std::floor((std::sqrt(std::pow(position.x(), 2) + std::pow(position.y(), 2))) / x_res);
-    int y_index = 50;
+    int y_index = 0;
     int z_index = std::floor((position.z() + (z_dim/2. * z_res)) / z_res);
 
     G4double vol_weight = (pi*(std::pow((x_index+1)*x_res, 2))*z_res) - (pi*(std::pow((x_index)*x_res, 2))*z_res);

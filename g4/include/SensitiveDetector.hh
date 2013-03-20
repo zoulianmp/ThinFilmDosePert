@@ -42,6 +42,7 @@ public:
     SensitiveDetector(const G4String& name);
     virtual ~SensitiveDetector();
 
+    void Init();
     void Initialize(G4HCofThisEvent*);
     G4bool ProcessHits(G4Step*, G4TouchableHistory*);
     void EndOfEvent(G4HCofThisEvent*);
@@ -54,18 +55,21 @@ public:
         x_dim = x;
         y_dim = y;
         z_dim = z;
+        modified = true;
     };
 
     void SetMinimumCutoff(G4int x, G4int y, G4int z) {
         x_min = x;
         y_min = y;
         z_min = z;
+        modified = true;
     };
 
     void SetMaximumCutoff(G4int x, G4int y, G4int z) {
         x_max = x;
         y_max = y;
         z_max = z;
+        modified = true;
     };
 
     void SetResolution(G4float x, G4float y, G4float z) {
@@ -74,6 +78,7 @@ public:
         z_res = z;
 
         volume = x * y * z;
+        modified = true;
     };
 
 public:
@@ -99,6 +104,7 @@ public:
     G4float y_res;
     G4float z_res;
 
+    G4bool modified;
 };
 
 
