@@ -73,13 +73,16 @@ void SensitiveDetector::Init() {
     npy_intp dims[] = {x_max - x_min, y_max - y_min, z_max - z_min};
 
     energy_histogram = pyublas::numpy_vector<float> (3, dims);
-    std::fill(energy_histogram.begin(), energy_histogram.end(), 0.0);
-
     counts_histogram = pyublas::numpy_vector<float> (3, dims);
-    std::fill(counts_histogram.begin(), counts_histogram.end(), 0.0);
-
+    ZeroHistograms();
+    
     modified = false;
 }
+
+void SensitiveDetector::ZeroHistograms() {
+    std::fill(energy_histogram.begin(), energy_histogram.end(), 0.0);
+    std::fill(counts_histogram.begin(), counts_histogram.end(), 0.0);
+};
 
 void SensitiveDetector::Initialize(G4HCofThisEvent*) {
 }

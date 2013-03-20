@@ -45,6 +45,7 @@ BOOST_PYTHON_MODULE(libg4) {
             .def("SetMinimumCutoff", &DetectorConstruction::SetMinimumCutoff)
             .def("SetMaximumCutoff", &DetectorConstruction::SetMaximumCutoff)
             .def("SetResolution", &DetectorConstruction::SetResolution)
+            .def("ZeroHistograms", &DetectorConstruction::ZeroHistograms)
         ;   // End DetectorConstruction
 
     class_<PhysicsList, PhysicsList*,

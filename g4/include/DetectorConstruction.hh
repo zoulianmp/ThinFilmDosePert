@@ -77,6 +77,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
         this->detector->SetResolution(x, y, z);
     };
 
+    void ZeroHistograms() {
+        this->detector->ZeroHistograms();
+    };
   private:
     SensitiveDetector* detector;
 

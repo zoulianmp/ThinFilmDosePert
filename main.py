@@ -25,6 +25,7 @@ import pyublas
 import Geant4
 import g4 
 
+from Geant4 import keV, MeV
 
 if __name__ == "__main__":
     seed = long(random.randint(0, 2**32))

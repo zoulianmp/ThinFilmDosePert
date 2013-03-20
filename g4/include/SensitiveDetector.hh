@@ -43,6 +43,7 @@ public:
     virtual ~SensitiveDetector();
 
     void Init();
+    void ZeroHistograms();
     void Initialize(G4HCofThisEvent*);
     G4bool ProcessHits(G4Step*, G4TouchableHistory*);
     void EndOfEvent(G4HCofThisEvent*);
