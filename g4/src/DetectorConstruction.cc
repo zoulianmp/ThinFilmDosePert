@@ -34,8 +34,8 @@
 DetectorConstruction::DetectorConstruction()
 {
     phantom_size = 10*cm;
-    film_thickness = 1*cm;
-    film_density = 2*g/cm3;
+    film_thickness = 0.1*mm;
+    film_density = 1.1*g/cm3;
 
     MakeMaterials();
 }
@@ -79,12 +79,11 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 void DetectorConstruction::MakeMaterials() {
     G4NistManager* nist_manager = G4NistManager::Instance();
-    air = nist_manager->FindOrBuildMaterial("G4_AIR");
+    air = nist_manager->FindOrBuildMaterial("G4_Galactic");
     water = nist_manager->FindOrBuildMaterial("G4_WATER");
 
     G4String material_name = "G4_WATER" + G4UIcommand::ConvertToString(film_density);
     dense_water = nist_manager->BuildMaterialWithNewDensity(material_name,
                                                             "G4_WATER", 
                                                             film_density);
-    dense_water = nist_manager->FindOrBuildMaterial("G4_Sn");
 }

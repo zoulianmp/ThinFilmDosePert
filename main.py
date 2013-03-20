@@ -47,9 +47,14 @@ if __name__ == "__main__":
     Geant4.gRunManager.Initialize()
     Geant4.gUImanager.ExecuteMacroFile("macros/vis.mac")
 
-    Geant4.gRunManager.BeamOn(10000)
+    detector_construction.SetDimensions(32, 32, 32)
+    detector_construction.SetMinimumCutoff(0, 0, 0)
+    detector_construction.SetMaximumCutoff(32, 32, 32)
+    detector_construction.SetResolution(0.1, 0.1, 0.1)
+
+    Geant4.gRunManager.BeamOn(1000000)
 
     energy = detector_construction.GetEnergyHistogram()
-    pylab.matshow(energy[:,50,:])
-    pylab.show()
- 
+#    pylab.matshow(numpy.log(energy[:,250,:]))
+#    pylab.show()
+    numpy.save("output", energy)

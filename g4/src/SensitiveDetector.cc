@@ -45,21 +45,21 @@ SensitiveDetector::SensitiveDetector(const G4String& name) : G4VSensitiveDetecto
 
     debug = false;
 
-    x_dim = 101;
-    y_dim = 101;
-    z_dim = 101;
+    x_dim = 501;
+    y_dim = 501;
+    z_dim = 501;
 
     x_min = 0;
     y_min = 0;
     z_min = 0;
 
-    x_max = 101;
-    y_max = 101;
-    z_max = 101;
+    x_max = 501;
+    y_max = 501;
+    z_max = 501;
 
-    x_res = 1*mm;
-    y_res = 1*mm;
-    z_res = 1*mm;
+    x_res = 2*mm;
+    y_res = 2*mm;
+    z_res = 2*mm;
 
     volume = x_res*y_res*z_res;
 

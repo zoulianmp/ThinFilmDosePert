@@ -61,6 +61,22 @@ class DetectorConstruction : public G4VUserDetectorConstruction
         return detector->counts_histogram;
     }
 
+    void SetDimensions(G4int x, G4int y, G4int z) {
+        this->detector->SetDimensions(x, y, z);
+    };
+
+    void SetMinimumCutoff(G4int x, G4int y, G4int z) {
+        this->detector->SetMinimumCutoff(x, y, z);
+    };
+
+    void SetMaximumCutoff(G4int x, G4int y, G4int z) {
+        this->detector->SetMaximumCutoff(x, y, z);
+    };
+
+    void SetResolution(G4float x, G4float y, G4float z) {
+        this->detector->SetResolution(x, y, z);
+    };
+
   private:
     SensitiveDetector* detector;
 
