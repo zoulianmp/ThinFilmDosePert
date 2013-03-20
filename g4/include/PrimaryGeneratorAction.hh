@@ -30,15 +30,19 @@ class G4Event;
 
 class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
-    public:
-        PrimaryGeneratorAction();
-        ~PrimaryGeneratorAction();
+  public:
+    PrimaryGeneratorAction();
+    ~PrimaryGeneratorAction();
+    
+    void SetEnergy(G4double energy) {
+        particle_gun->SetParticleEnergy(energy);
+    };
 
-    public:
-        void GeneratePrimaries(G4Event* event);
+  public:
+    void GeneratePrimaries(G4Event* event);
 
-    private:
-        G4ParticleGun* particle_gun;
+  private:
+    G4ParticleGun* particle_gun;
 };
 
 #endif
