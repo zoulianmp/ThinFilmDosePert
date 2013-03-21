@@ -44,9 +44,16 @@ DetectorConstruction::~DetectorConstruction()
 {
 }
 
+void DetectorConstruction::Update() {
+    G4SolidStore::GetInstance()->Clean();
+    G4LogicalVolumeStore::GetInstance()->Clean();
+    G4PhysicalVolumeStore::GetInstance()->Clean();
+
+    Construct();
+}
+
 G4VPhysicalVolume* DetectorConstruction::Construct()
 {
-
     world_solid = new G4Box("world_solid", 1*m, 1*m, 1*m);
     world_logical = new G4LogicalVolume(world_solid, air, "world_logical", 0, 0, 0);
     world_physical = new G4PVPlacement(0, G4ThreeVector(), world_logical, 

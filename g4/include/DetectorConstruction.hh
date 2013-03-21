@@ -31,6 +31,9 @@
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4Material.hh"
+#include "G4PhysicalVolumeStore.hh"
+#include "G4LogicalVolumeStore.hh"
+#include "G4SolidStore.hh"
 
 #include "boost/python.hpp"
 #include "pyublas/numpy.hpp"
@@ -42,6 +45,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     DetectorConstruction();
     ~DetectorConstruction();
 
+    void Update();
     G4VPhysicalVolume* Construct();
     void MakeMaterials();
 
@@ -52,6 +56,13 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     void SetFilmThickness(G4double thickness) {
         film_thickness = thickness;
     }
+
+    void SetFilmProperties(G4double density, G4double thickness) {
+        SetFilmDensity(density);
+        SetFilmThickness(thickness);
+
+        Update();
+    };
 
     pyublas::numpy_vector<float> GetEnergyHistogram() {
         return detector->energy_histogram;

@@ -53,7 +53,7 @@ if __name__ == "__main__":
     detector_construction.SetMaximumCutoff(501, 1, 1001)
     detector_construction.SetResolution(.1, .1, .1)
 
-    for ene in range(100, 1100, 100):
+    for ene in range(2000, 6500, 500):
         primary_generator.SetEnergy(ene*keV)
         Geant4.gRunManager.BeamOn(1000000)
 

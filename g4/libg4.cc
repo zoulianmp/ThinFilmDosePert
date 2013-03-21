@@ -41,6 +41,7 @@ BOOST_PYTHON_MODULE(libg4) {
         ("DetectorConstruction", "detector")
             .def("GetEnergyHistogram", &DetectorConstruction::GetEnergyHistogram)
             .def("GetCountsHistogram", &DetectorConstruction::GetCountsHistogram)
+            .def("SetFilmProperties", &DetectorConstruction::SetFilmProperties)
             .def("SetDimensions", &DetectorConstruction::SetDimensions)
             .def("SetMinimumCutoff", &DetectorConstruction::SetMinimumCutoff)
             .def("SetMaximumCutoff", &DetectorConstruction::SetMaximumCutoff)
