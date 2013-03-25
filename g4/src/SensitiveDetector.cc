@@ -105,20 +105,17 @@ G4bool SensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory* touchab
 
 
     G4ThreeVector position = aTrack->GetPosition();
-    position.setX(log(abs(position.x())));
 
 //    int x_index = std::floor((position.x() + (x_dim/2. * x_res)) / x_res);
 //    int y_index = std::floor((position.y() + (y_dim/2. * y_res)) / y_res);
 //    int z_index = std::floor((position.z() + (z_dim/2. * z_res)) / z_res);
 
-    double pos = std::sqrt(std::pow(position.x(), 2) + std::pow(position.y(), 2));
+    float pos = std::sqrt(std::pow(position.x(), 2) + std::pow(position.y(), 2));
     int x_index = 0;
-
+    
     pyublas::detail::numpy_vec_iterator<float> it;
-    for (it=this->bins.begin();
-         it<this->bins.end(); it++ )
-    {
-        if (pos < *it) {
+    for (it=this->bins.begin(); it<this->bins.end(); it++ ) {
+        if (pos > *it) {
             x_index += 1;
         }
     }
@@ -127,7 +124,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory* touchab
     int y_index = 0;
     int z_index = std::floor((position.z() + (z_dim/2. * z_res)) / z_res);
 
-    G4double vol_weight = (pi*(std::pow((x_index+1)*x_res, 2))*z_res) - (pi*(std::pow((x_index)*x_res, 2))*z_res);
+    G4double vol_weight = 1.;//(pi*(std::pow((x_index+1)*x_res, 2))*z_res) - (pi*(std::pow((x_index)*x_res, 2))*z_res);
 
     if (debug) {
         G4cout << "Solid name:       " << aTrack->GetVolume()->GetLogicalVolume()->GetName() << G4endl;
