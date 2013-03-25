@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import sys
 import random
 
 import numpy
-import pylab
 import pyublas
 
 import Geant4
@@ -46,20 +46,19 @@ if __name__ == "__main__":
     Geant4.gRunManager.SetUserAction(stepping_action)
 
     Geant4.gRunManager.Initialize()
-    Geant4.gUImanager.ExecuteMacroFile("macros/vis.mac")
+    #Geant4.gUImanager.ExecuteMacroFile("macros/vis.mac")
 
+    histories, energy, density, thickness = sys.argv[1:5]
+
+    detector_construction.SetFilmProperties(float(density), float(thickness))
     detector_construction.SetDimensions(501, 1, 1001)
     detector_construction.SetMinimumCutoff(0, 0, 0)
     detector_construction.SetMaximumCutoff(501, 1, 1001)
     detector_construction.SetResolution(.1, .1, .1)
 
-    for ene in range(100, 10100, 500):
-        for den in numpy.arange(0.1, 2.1, 0.1):
-            detector_construction.SetFilmProperties(den, 0.1)
+    primary_generator.SetEnergy(float(energy)*keV)
+    Geant4.gRunManager.BeamOn(int(histories))
 
-            primary_generator.SetEnergy(ene*keV)
-            Geant4.gRunManager.BeamOn(50000)
-
-            energy = detector_construction.GetEnergyHistogram()
-            numpy.save("output/energy_%f_density_%f" % (ene, den), energy)
-            detector_construction.ZeroHistograms()
+    data = detector_construction.GetEnergyHistogram()
+    numpy.save("output/ene_%s_den_%s_thk_%s_hist_%s" % (energy, density, thickness, histories), data)
+    detector_construction.ZeroHistograms()
