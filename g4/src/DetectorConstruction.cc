@@ -30,6 +30,8 @@
 #include "G4UserLimits.hh"
 #include "G4VisAttributes.hh"
 #include "G4SDManager.hh"
+#include "G4RunManager.hh"
+
 
 DetectorConstruction::DetectorConstruction()
 {
@@ -49,7 +51,8 @@ void DetectorConstruction::Update() {
     G4LogicalVolumeStore::GetInstance()->Clean();
     G4PhysicalVolumeStore::GetInstance()->Clean();
 
-    Construct();
+    G4RunManager::GetRunManager()->DefineWorldVolume(Construct());
+    G4RunManager::GetRunManager()->GeometryHasBeenModified();
 }
 
 G4VPhysicalVolume* DetectorConstruction::Construct()
