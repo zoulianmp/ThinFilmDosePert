@@ -72,6 +72,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction
         return detector->counts_histogram;
     }
 
+    void SetBins(pyublas::numpy_vector<double> bins) {
+        this->detector->SetBins(bins);
+    };
+
     void SetDimensions(G4int x, G4int y, G4int z) {
         this->detector->SetDimensions(x, y, z);
     };

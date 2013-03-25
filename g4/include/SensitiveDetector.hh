@@ -82,10 +82,15 @@ public:
         modified = true;
     };
 
+    void SetBins(pyublas::numpy_vector<float> bins) {
+        this->bins = bins;
+    };
+
 public:
 
     pyublas::numpy_vector<float> energy_histogram;
     pyublas::numpy_vector<float> counts_histogram;
+    pyublas::numpy_vector<float> bins;
 
     //G4double voxel_mass;
     G4double volume;

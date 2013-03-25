@@ -39,6 +39,7 @@ BOOST_PYTHON_MODULE(libg4) {
     class_<DetectorConstruction, DetectorConstruction*,
         bases<G4VUserDetectorConstruction> >
         ("DetectorConstruction", "detector")
+            .def("SetBins", &DetectorConstruction::SetBins)
             .def("GetEnergyHistogram", &DetectorConstruction::GetEnergyHistogram)
             .def("GetCountsHistogram", &DetectorConstruction::GetCountsHistogram)
             .def("SetFilmProperties", &DetectorConstruction::SetFilmProperties)

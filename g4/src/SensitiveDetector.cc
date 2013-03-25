@@ -111,7 +111,19 @@ G4bool SensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory* touchab
 //    int y_index = std::floor((position.y() + (y_dim/2. * y_res)) / y_res);
 //    int z_index = std::floor((position.z() + (z_dim/2. * z_res)) / z_res);
 
-    int x_index = std::floor((std::sqrt(std::pow(position.x(), 2) + std::pow(position.y(), 2))) / x_res);
+    double pos = std::sqrt(std::pow(position.x(), 2) + std::pow(position.y(), 2));
+    int x_index = 0;
+
+    pyublas::detail::numpy_vec_iterator<float> it;
+    for (it=this->bins.begin();
+         it<this->bins.end(); it++ )
+    {
+        if (pos < *it) {
+            x_index += 1;
+        }
+    }
+ 
+
     int y_index = 0;
     int z_index = std::floor((position.z() + (z_dim/2. * z_res)) / z_res);
 

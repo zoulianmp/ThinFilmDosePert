@@ -51,6 +51,10 @@ if __name__ == "__main__":
     histories, energy, density, thickness = sys.argv[1:5]
 
     detector_construction.SetFilmProperties(float(density), float(thickness))
+    
+    bins = numpy.array(numpy.logspace(-2, numpy.log10(100), 500), dtype=float)
+    detector_construction.SetBins(bins)
+
     detector_construction.SetDimensions(501, 1, 1001)
     detector_construction.SetMinimumCutoff(0, 0, 0)
     detector_construction.SetMaximumCutoff(501, 1, 1001)
