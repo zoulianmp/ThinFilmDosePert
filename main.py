@@ -53,10 +53,13 @@ if __name__ == "__main__":
     detector_construction.SetMaximumCutoff(501, 1, 1001)
     detector_construction.SetResolution(.1, .1, .1)
 
-    for ene in range(2000, 6500, 500):
-        primary_generator.SetEnergy(ene*keV)
-        Geant4.gRunManager.BeamOn(1000000)
+    for ene in range(100, 10100, 500):
+        for den in numpy.arange(0.1, 2.1, 0.1):
+            detector_construction.SetFilmProperties(den, 0.1)
 
-        energy = detector_construction.GetEnergyHistogram()
-        numpy.save("output/energy_%i" % ene, energy)
-        detector_construction.ZeroHistograms()
+            primary_generator.SetEnergy(ene*keV)
+            Geant4.gRunManager.BeamOn(50000)
+
+            energy = detector_construction.GetEnergyHistogram()
+            numpy.save("output/energy_%f_density_%f" % (ene, den), energy)
+            detector_construction.ZeroHistograms()
