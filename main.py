@@ -52,7 +52,11 @@ if __name__ == "__main__":
 
     detector_construction.SetFilmProperties(float(density), float(thickness))
     
-    bins = numpy.array(numpy.logspace(-2, numpy.log10(50), 501), dtype=float)
+    #bins = numpy.array(numpy.logspace(-1, numpy.log10(500), 51), dtype=float)
+    #bins = numpy.append(0, bins)
+
+    bins = numpy.arange(0, 501).astype(float)
+
     detector_construction.SetBins(bins)
 
     detector_construction.SetDimensions(501, 1, 1001)
