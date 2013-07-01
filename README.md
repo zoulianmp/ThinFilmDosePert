@@ -1,6 +1,4 @@
-# GEANT4 + Python boilerplate
-
-This project is a simple default setup for building a GEANT4 simulation as Python library.
+Calculate the dose perturbation of thin films on the surface of a phantom
 
 ## Compilation
 
@@ -13,7 +11,3 @@ To do this perform the following:
 * cmake ..
 * make
 
-## Usage
-
-Edit `g4/src` and `g4/include` so as to describe your desired simulation.
-   
