@@ -28,6 +28,7 @@
 #include "G4VUserDetectorConstruction.hh"
 
 #include "G4Box.hh"
+#include "G4Tubs.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4Material.hh"
@@ -102,7 +103,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     G4LogicalVolume* world_logical;
     G4VPhysicalVolume* world_physical;
 
-    G4Box* phantom_solid;
+    G4Tubs* phantom_solid;
     G4LogicalVolume* phantom_logical;
     G4VPhysicalVolume* phantom_physical;
 

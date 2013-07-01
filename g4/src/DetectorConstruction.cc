@@ -63,9 +63,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                                       "world_physical", 0, false, 0);
     world_logical->SetVisAttributes(G4VisAttributes::Invisible);
 
-    phantom_solid = new G4Box("phantom_solid", phantom_size/2.,
-                                               phantom_size/2.,
-                                               phantom_size/2.);
+//    phantom_solid = new G4Box("phantom_solid", phantom_size/2.,
+//                                               phantom_size/2.,
+//                                               phantom_size/2.);
+    phantom_solid = new G4Tubs("phantom_solid", 0, phantom_size/2., phantom_size/2., 0, 360*deg);
     phantom_logical = new G4LogicalVolume(phantom_solid, water, "phantom_logical", 0, 0, 0);
     phantom_physical = new G4PVPlacement(0, G4ThreeVector(), phantom_logical, 
                                          "phantom_physical", world_logical, false, 0);
