@@ -4,3 +4,4 @@
 *.so
 *.npy
 g4/build/*
+output/*
